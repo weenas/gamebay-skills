@@ -10,16 +10,17 @@ Use this skill to make games that work as GameBay GPK packages on Android TV. It
 
 ## Start by inspecting the actual project
 
-1. Find the game's `gamebay.json`, `index.html`, bundled `runtime.js`, game code, and packaging command.
+1. Find the game's `gamebay.json`, `index.html`, local preview `runtime.js`, game code, and packaging command. The SDK copy is for preview; it is excluded from the GPK.
 2. Read the current platform contract in [platform-contract.md](references/platform-contract.md).
-3. Inspect the project's own SDK and packaging validator. Do not assume examples in this skill match a newer API.
+3. Inspect the project's SDK bundle version, SDK manifest, and packaging validator. Do not guess SDK versions or capabilities.
 4. Before using an API, verify its signature and behavior in the current `weenas/gamebay-games` SDK and host implementation.
 5. Preserve unrelated user changes. Do not edit generated GPKs or bump a published version unless the task requires a release package.
 
 ## GameBay design constraints
 
 - Treat the TV as the primary device: landscape 16:9, readable at couch distance, large focus/selection states, and complete operation using a D-pad and OK. Support the host's declared controller inputs as appropriate.
-- The game runs locally in the GameBay Android WebView sandbox. Bundle every required script, image, font, and audio asset. Do not depend on a server, CDN, external URL, remote script, or runtime network fetch.
+- The game runs locally in the GameBay Android WebView sandbox. Bundle every game-owned script, image, font, and audio asset. Declare an exact `sdkVersion`; the platform provides the shared SDK bundle. Do not depend on public network access at runtime.
+- Keep the source-local `runtime.js` synchronized with the canonical SDK for browser preview. The packer must omit `runtime.js` from the GPK. Do not copy SDK implementation into game files or package files under the reserved `__gamebay_sdk__/` path.
 - Use the GameBay Runtime APIs for platform integration. Declare every used capability in both `gamebay.json` and the matching HTML meta tag. Undeclared APIs may be rejected by the SDK or host.
 - The host owns global Back/B behavior and pause/navigation. Do not add a redundant in-game “back to library” button. Handle lifecycle pause/resume cleanly.
 - Keep simulation timing independent of display refresh. Use `requestAnimationFrame` for rendering, elapsed-time updates for simulation, and clamp unusually large frame deltas after pause/resume.
@@ -44,7 +45,7 @@ Identify game genre, single/multiplayer needs, control scheme, expected session 
 
 ### 3. Declare capabilities and package metadata
 
-Use the smallest accurate capability set. Keep the `capabilities` array unique and sorted as required by the current packer, and ensure `index.html` has exactly the matching `gamebay-capabilities` meta value. Declare `players` only with the required player metadata; `resume: true` must meet the SDK's checkpoint/launch requirements. Verify these rules from the current packer before release.
+Use the smallest accurate capability set. Keep the `capabilities` array unique and sorted as required by the current packer, and ensure `index.html` has exactly the matching `gamebay-capabilities` meta value. Declare the exact `sdkVersion`. Declare `players` only with required player metadata; `resume: true` must meet the SDK's checkpoint/launch requirements. Verify the SDK bundle and GPK rules from the current packer before release.
 
 ### 4. Validate progressively
 
@@ -53,7 +54,7 @@ Use the smallest accurate capability set. Keep the `capabilities` array unique a
 3. Test keyboard preview mappings for D-pad, OK, and Back, while remembering the host may reserve Back.
 4. Install on an Android TV and test the real remote, at least one representative controller, focus/selection, input hold/repeat, audio, lifecycle pause/resume, restart, and save/resume.
 5. Test with network unavailable to confirm all runtime dependencies are local.
-6. Review GPK contents, metadata, size limits, and asset licensing. Only create or submit a release package when asked.
+6. Verify SDK bundle presence/version, and inspect GPK contents to confirm it contains no SDK files and its manifest declares the intended SDK version. Review metadata, size limits, hashes, and asset licensing. Only submit a release package when asked.
 
 Record device model, Android/WebView version, controller model, test steps, and observed result for compatibility claims. Do not describe an untested device as verified.
 
@@ -71,4 +72,4 @@ Record device model, Android/WebView version, controller model, test steps, and 
 - If analog movement jitters, inspect axis range, dead zone, normalization, and per-frame polling/event cadence.
 - If sound is missing, verify local asset paths, a user gesture, the host media settings, and lifecycle behavior.
 - If performance drops, measure frame time first; reduce unnecessary drawing, scaling, allocations, and unbounded entity counts.
-- If packaging rejects a game, trust the current validator output and inspect the manifest, meta tag, paths, hashes, size limits, API version, and declared capabilities.
+- If packaging rejects a game, trust the current validator output and inspect the manifest, SDK version, meta tag, paths, hashes, size limits, and declared capabilities.

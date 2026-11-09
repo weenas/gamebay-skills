@@ -19,6 +19,12 @@ Use this skill to make games that work as GameBay GPK packages on Android TV. It
 ## GameBay design constraints
 
 - Treat the TV as the primary device: landscape 16:9, readable at couch distance, large focus/selection states, and complete operation using a D-pad and OK. Support the host's declared controller inputs as appropriate.
+- Design controller-first: make focus order predictable and visible, show the active control scheme where useful, and ensure every menu can be completed without touch or mouse. Test D-pad, analog stick, remote, and gamepad separately when supported.
+- Separate game mechanics from their presentation. First make the action reliable; then add proportionate visual and audio feedback. Feedback must not swallow, delay, or permanently alter gameplay input/state.
+- For uncertain design changes, state the player behavior or experience being addressed, separate observed evidence from assumptions, and test the smallest reversible variant on the target TV. Do not treat a theory or a longer session as proof that a change is more fun.
+- Use screen space deliberately: prioritize the current objective and actionable information, keep text and focus states legible from a viewing distance, and respect display safe areas. Avoid motion or decoration that competes with gameplay.
+- Scale feedback to event importance. A hit, pickup, or game-over may combine a brief sound, animation, particles, or restrained camera/visual effect; routine navigation and movement should remain calm. Effects should decay back to the normal state.
+- Provide ways to reduce intense screen shake, flashing, and other motion where the game uses them. Do not make color the only signal for state or success.
 - The game runs locally in the GameBay Android WebView sandbox. Bundle every required script, image, font, and audio asset. Do not depend on a server, CDN, external URL, remote script, or runtime network fetch.
 - Use the GameBay Runtime APIs for platform integration. Declare every used capability in both `gamebay.json` and the matching HTML meta tag. Undeclared APIs may be rejected by the SDK or host.
 - The host owns global Back/B behavior and pause/navigation. Do not add a redundant in-game “back to library” button. Handle lifecycle pause/resume cleanly.
@@ -32,6 +38,8 @@ Use this skill to make games that work as GameBay GPK packages on Android TV. It
 ### 1. Clarify and plan
 
 Identify game genre, single/multiplayer needs, control scheme, expected session length, save/resume behavior, and target Android TV. For changes to an existing game, reproduce the issue or inspect logs before changing code.
+
+For a gameplay or UX change, also record the intended player outcome, the evidence behind the problem, the main assumption, and what result would make you keep, revise, or reject the change. Use [design and feel guidance](references/design-and-feel.md) for uncertain or experience-level questions.
 
 ### 2. Implement in small pieces
 
@@ -61,6 +69,7 @@ Record device model, Android/WebView version, controller model, test steps, and 
 
 - [Platform contract](references/platform-contract.md): packaging, capabilities, input, lifecycle, storage, and security boundaries.
 - [TV game checklist](references/tv-game-checklist.md): implementation and test checklist.
+- [Design and feel guidance](references/design-and-feel.md): TV-first UI, proportionate feedback, and testable design hypotheses.
 - [Reference games](references/reference-games.md): which current GameBay examples are useful for specific patterns.
 - [Input example](examples/input-state.js): minimal event-state handling pattern; adapt to the verified SDK.
 

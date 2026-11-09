@@ -19,7 +19,7 @@ Tool support and discovery paths can change; check your tool's current documenta
 ## What's included
 
 - `skills/gamebay-game-development/SKILL.md`: the portable, task-oriented skill.
-- `skills/gamebay-game-development/references/`: platform contract and focused checklists.
+- `skills/gamebay-game-development/references/`: platform contract, TV checklist, design/feel guidance, and focused references.
 - `skills/gamebay-game-development/examples/`: small patterns for safe input handling.
 
 ## Source of truth

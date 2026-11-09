@@ -20,7 +20,7 @@ Tool support and discovery paths can change; check your tool's current documenta
 
 - `skills/gamebay-game-development/SKILL.md`: the portable, task-oriented skill.
 - `skills/gamebay-game-development/references/`: platform contract and focused checklists.
-- `examples/`: small patterns for safe input handling and manifest declarations.
+- `skills/gamebay-game-development/examples/`: small patterns for safe input handling.
 
 ## Source of truth
 

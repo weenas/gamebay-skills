@@ -62,7 +62,7 @@ Record device model, Android/WebView version, controller model, test steps, and 
 - [Platform contract](references/platform-contract.md): packaging, capabilities, input, lifecycle, storage, and security boundaries.
 - [TV game checklist](references/tv-game-checklist.md): implementation and test checklist.
 - [Reference games](references/reference-games.md): which current GameBay examples are useful for specific patterns.
-- [Input example](../../examples/input-state.js): minimal event-state handling pattern; adapt to the verified SDK.
+- [Input example](examples/input-state.js): minimal event-state handling pattern; adapt to the verified SDK.
 
 ## Troubleshooting rules
 

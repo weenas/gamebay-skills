@@ -2,7 +2,7 @@
 
 ## Before implementation
 
-- [ ] Confirm game ID, genre, one/multiplayer mode, target device and Runtime API version.
+- [ ] Confirm game ID, genre, one/multiplayer mode, target device and exact SDK bundle version.
 - [ ] Decide D-pad/OK/controller actions and how the player discovers them.
 - [ ] Decide whether progress is session-only, a save, or a resumable checkpoint.
 - [ ] Confirm every asset is original or properly licensed.
@@ -19,11 +19,14 @@
 - [ ] Audio begins after user interaction and behaves correctly during host lifecycle events.
 - [ ] Save data is validated, versioned, bounded, and written at safe points.
 - [ ] Only used capabilities are declared, with matching HTML metadata.
+- [ ] The local preview SDK copy matches the canonical SDK source.
 
 ## Before release packaging
 
 - [ ] Run the current repository packer and all relevant checks.
 - [ ] Confirm the GPK includes the intended code and assets and respects current limits.
+- [ ] Confirm the GPK declares `sdkVersion` and does not contain `runtime.js` or reserved SDK resources.
+- [ ] Confirm the server has the exact SDK bundle and its integrity metadata before submitting the GPK.
 - [ ] Test local browser preview and keyboard mappings.
 - [ ] Test an actual Android TV remote and representative controller.
 - [ ] Verify pause/resume, restart, game-over, save/resume, and offline launch.
